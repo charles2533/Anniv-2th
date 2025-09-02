@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kisah Kita: Anniversary ke-2</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Playfair Display", serif;
+      }
+      #gift-loader {
+        cursor: pointer;
+      }
+      #main-page-content {
+        opacity: 0;
+        visibility: hidden;
+      }
+      #threejs-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      
+    </style>
+  </head>
+  <body class="bg-stone-50 text-stone-800">
+    <div
+      id="countdown-container"
+      class="fixed top-0 left-0 z-[200] flex h-screen w-screen flex-col items-center justify-center bg-rose-100 p-6 text-center"
+    >
+      <div class="bg-white/60 backdrop-blur-md p-8 rounded-2xl shadow-lg">
+        <h2 class="text-4xl md:text-5xl font-bold text-rose-500 mb-4">
+          Sesuatu yang Spesial akan Datang...
+        </h2>
+        <p class="text-stone-600 mb-8">
+          Sebuah hadiah kecil akan terbuka buat cayangggg, tapi harus sabar sedikit
+          lagi yaa ♡
+        </p>
+        <div
+          id="timer"
+          class="flex justify-center space-x-4 md:space-x-8 text-rose-800 mb-8"
+        >
+          <div>
+            <div id="days" class="text-4xl md:text-6xl font-bold">00</div>
+            <div class="text-xs uppercase">Hari</div>
+          </div>
+          <div>
+            <div id="hours" class="text-4xl md:text-6xl font-bold">00</div>
+            <div class="text-xs uppercase">Jam</div>
+          </div>
+          <div>
+            <div id="minutes" class="text-4xl md:text-6xl font-bold">00</div>
+            <div class="text-xs uppercase">Menit</div>
+          </div>
+          <div>
+            <div id="seconds" class="text-4xl md:text-6xl font-bold">00</div>
+            <div class="text-xs uppercase">Detik</div>
+          </div>
+        </div>
+        <p class="text-sm text-stone-500">
+          Sampai jumpa di 18 September 2025! ♡
+        </p>
+      </div>
+    </div>
+
+    <div id="anniversary-content" style="display: none">
+      <div
+        id="gift-loader"
+        class="fixed top-0 left-0 z-[100] flex h-full w-full flex-col items-center justify-center bg-rose-50"
+      >
+        <div class="h-96 w-full max-w-lg">
+          <canvas id="threejs-canvas"></canvas>
+        </div>
+        <p
+          id="click-prompt"
+          class="mt-4 animate-pulse text-xl font-semibold text-rose-500"
+        >
+          Sesuatu hadiah kecil buat cayang, klik kado ini ♡
+        </p>
+      </div>
+
+     <div id="main-page-content">
+      <header class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50">
+        <nav
+          class="container mx-auto px-6 py-3 flex justify-between items-center"
+        >
+          <a href="#home" class="text-3xl mt-1 font-bold text-rose-500"
+            >♡♡</a
+          >
+          <div class="hidden md:flex space-x-6">
+            <a href="#story" class="hover:text-rose-500 transition-colors"
+              >Kisah Kita</a
+            >
+            <a href="#gallery" class="hover:text-rose-500 transition-colors"
+              >Galeri</a
+            >
+            <a href="#map" class="hover:text-rose-500 transition-colors"
+              >Peta Kenangan</a
+            >
+            <a href="#reasons" class="hover:text-rose-500 transition-colors"
+              >Untukmu</a
+            >
+          </div>
+          <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </nav>
+        <div id="mobile-menu" class="md:hidden overflow-hidden">
+          <a href="#story" class="block py-2 px-6 text-sm hover:bg-rose-50"
+            >Kisah Kita</a
+          >
+          <a href="#gallery" class="block py-2 px-6 text-sm hover:bg-rose-50"
+            >Galeri</a
+          >
+          <a href="#map" class="block py-2 px-6 text-sm hover:bg-rose-50"
+            >Peta Kenangan</a
+          >
+          <a href="#reasons" class="block py-2 px-6 text-sm hover:bg-rose-50"
+            >Untukmu</a
+          >
+        </div>
+      </header>
+
+
+        <main>
+        <section id="home" class="relative min-h-screen flex flex-col justify-center items-center text-center">
+    
+     <div id="background-slider" class="absolute inset-0 w-full h-full overflow-hidden">
+        <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-100"
+            style="background-image: url('images/1.jpg');">
+            </div>
+        <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/2.jpg');">
+            </div>
+        <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/3.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/4.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/5.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/6.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/7.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/8.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/9.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/10.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/11.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/12.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/13.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/14.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/15.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/16.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/17.jpg');">
+            </div>
+             <div 
+            class="bg-slide absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-0"
+            style="background-image: url('images/18.jpg');">
+            </div>
+
+
+    </div>
+
+            <div class="relative bg-black/40 p-8 md:p-12 rounded-xl z-10">
+        <h1 id="main-title" class="text-4xl md:text-6xl text-white font-bold mb-4">
+            730 Hari
+        </h1>
+        <p id="main-subtitle" class="text-lg md:text-xl text-white/90 mb-8 max-w-2xl">
+            Happy 2nd Anniversary Cayangkuu! <br>
+            Thankyouu udah nerima dan nemenin aku selama ini!!<br>
+            Coba cayang hitung fotonya ada berapa hehehe ♡♡
+        </p>
+        <div class="text-center w-full">
+            <h3 class="text-3xl md:text-4xl text-white font-bold">
+                Happy Anniversary! ♡
+            </h3>
+            <p class="text-lg mt-2 text-white/90">
+                Scroll ke bawah yaa buat lihat kisah kita.
+            </p>
+        </div>
+    </div>
+</section>
+
+          <div id="main-content">
+          <section id="story" class="py-20">
+            <div class="container mx-auto px-6">
+              <h2
+                class="section-title text-4xl font-bold text-center mb-12 text-rose-500"
+              >
+                Perjalanan Oyes n Eyy
+              </h2>
+              <div class="relative wrap overflow-hidden p-10 h-full">
+                <div
+                  class="border-2-2 absolute border-opacity-20 border-rose-300 h-full border"
+                  style="left: 50%"
+                ></div>
+                <div
+                  class="timeline-item mb-8 flex justify-between items-center w-full right-timeline"
+                >
+                  <div class="order-1 w-5/12"></div>
+                  <div
+                    class="z-20 flex items-center order-1 bg-rose-500 shadow-xl w-8 h-8 rounded-full"
+                  >
+                    <h1 class="mx-auto font-semibold text-lg text-white">
+                      <i class="fas fa-heart"></i>
+                    </h1>
+                  </div>
+                  <div
+                    class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4"
+                  >
+                    <h3 class="font-bold text-stone-800 text-xl">Awal Mula</h3>
+                    <p class="text-sm">
+                      Di awal kitaa ga deket, cuma saling kenal nih di fave. <br>
+                      Abis itu kita mulai deket waktu bahas botol Corkcicle, 
+                      dan aku selalu berusaha cari topik chat sampai main pubg ama roblox bareng.<br>
+                      Sampai hampir tiap malem kita main sambil call. HAHHAHAA MODUS GA SI. TAPI HAPPY POLL. <br>
+                      Apalagi tiap latihan aku beliin cayang minum ama kadang jajan HAHAHA. <br>
+                      Inget gaa waktu aku belani carii onigiri muter muter sekitar indomaret deket sekolah soalnyaa pedes semua. HEHEHHEHE<br>
+                      Sempet tembak kamu di gazebo sambil bawa chi chi ama tas pink hehhee... tapii disuruh nunggu dulu sii.
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="timeline-item mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline"
+                >
+                  <div class="order-1 w-5/12"></div>
+                  <div
+                    class="z-20 flex items-center order-1 bg-rose-500 shadow-xl w-8 h-8 rounded-full"
+                  >
+                    <h1 class="mx-auto text-white font-semibold text-lg">
+                      <i class="fas fa-utensils"></i>
+                    </h1>
+                  </div>
+                  <div
+                    class="order-1 bg-rose-100 rounded-lg shadow-xl w-5/12 px-6 py-4"
+                  >
+                    <h3 class="font-bold text-stone-800 text-xl">
+                      Date Pertama
+                    </h3>
+                    <p class="text-sm">
+                      Date awal bangett si waktu kita masih belum jadian yaaaa, pas itu kita cari kadonya thal ulang tahun. 
+                      Diam diam lagi kamunya ga bilang papa mama.<br>
+                      Kita akhirnya beliin eye shadow harry potter, yang kamu mau WKWKWKW. <br>
+                      Nah dari situ aku kepikiran nembak cayang sama bawa eye shadow harry potter sambil suruh agnes nahan kamu beli, 
+                      soalnya di shopi lagi murah HOHOHO.<br>
+                      Pas aku nembak cayang, parah si deg deg an terus akhirnya cayang mauu. YEAYYY!! terus ditinggal pulang HAHAHHAHAA.<br>
+                      Kalau date awal banget pacaran kayaknyaa nontonn yaaaaa The nun 2 HUAAHHAHAAHA KAMU LO TAKUTAN, 
+                      itupun masih diam diam ga si ga bilang papa mama.<br>
+                      Terus aku inget juga kamu balesin aku pake surat dann lucu polll terharuuu dikasihhh lukisannn jugaaa HEPIIIII, 
+                      first time dapet surat.<br>
+                      Terus kita pernah kabur ke barat ke gereja, pas itu papa mama lagi keluar kota, 
+                      cayang cuma bilang cece kita ke geraja yakobus. HAHAHHAHAHA
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="timeline-item mb-8 flex justify-between items-center w-full right-timeline"
+                >
+                  <div class="order-1 w-5/12"></div>
+                  <div
+                    class="z-20 flex items-center order-1 bg-rose-500 shadow-xl w-8 h-8 rounded-full"
+                  >
+                    <h1 class="mx-auto font-semibold text-lg text-white">
+                      <i class="fas fa-calendar-check"></i>
+                    </h1>
+                  </div>
+                  <div
+                    class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4"
+                  >
+                    <h3 class="font-bold text-stone-800 text-xl">
+                      Anniversary Pertama
+                    </h3>
+                    <p class="text-sm">
+                      Cepet banget ga kerasa tiba tiba udah setahun ajaa waktu itu.<br>
+                      Aku dateng tiba tiba dari kampus ga bilang kamu hehe, 
+                      terus bawa bunga buatanku sendiri dari pita sama ada surat plus photocard hehhe.<br>
+                      Bunganyaa cuantikkkkk aku bikin 9 kelopak artinya bulan september hehehe, susah ituu ngebucketnyaa hehehe.<br>
+                      Terus minggunya kita makan di "My story" di ciland. Kita mam steak waktu itu, enakk bangettt!! <br>
+                      Abis makan, kita kerumahku dulu sebentar main ama tingwe. Abis itu lanjuttt kita ke PM melukis sama jalan jalan.<br>
+                      Abis ituuu kita makan lagi di tempat random HAHAHA tapi ternyata lumayan enakk didaerah Baratajaya kalau ga salah.<br>
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="timeline-item mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline"
+                >
+                  <div class="order-1 w-5/12"></div>
+                  <div
+                    class="z-20 flex items-center order-1 bg-rose-500 shadow-xl w-8 h-8 rounded-full"
+                  >
+                    <h1 class="mx-auto text-white font-semibold text-lg">
+                      <i class="fas fa-ring"></i>
+                    </h1>
+                  </div>
+                  <div
+                    class="order-1 bg-rose-100 rounded-lg shadow-xl w-5/12 px-6 py-4"
+                  >
+                    <h3 class="font-bold text-stone-800 text-xl">
+                      Anniversary Kedua
+                    </h3>
+                    <p class="text-sm">
+                      YEAYYY!! Sekarang kita udah 2 tahun ajaa, CEPETTT BANGETTT!! GA KERASA.<br>
+                      Aku seneng bangettt bisa ngelewatin 2 tahun bareng cayang, banyak bangetttt sukanya dukanya dikit ajaa WLE HAHAHHAA.<br>
+                      Aku harap kita bisa ngelewatin tahun - tahun berikutnya hingga TUA BARENG YEAYYY!!<br>
+                      Cowwyy ya cayang kalau aku adalah salah sama cayang, banyakk si pastii tapi cayang SABARR POLLL.<br>
+                      Aku janji bakal berusaha berubah buat jadi yang terbaik buat cayang, karena aku sayang bangettt sama cayang. EHHEHEHHEHEHE.<br>
+                      Thankyouuu udahhh mau sabar sama akuu baikk sama akuuu SEMUANYAAA THANKYOUUU CAYANGGGGG. <br>
+                      I LOVE YOUUUUUUUUUUUU VERYY MUCHHHHH♡♡
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="gallery" class="py-20 bg-rose-50">
+            <div class="container mx-auto px-6">
+              <h2
+                class="section-title text-4xl font-bold text-center mb-12 text-rose-500 gsap-reveal"
+              >
+                Galeri Kenangan
+              </h2>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="grid gap-4">
+                  <div class="gallery-item">
+                    <img
+                      class="h-auto max-w-full rounded-lg shadow-lg"
+                      src="images/momen1.jpg"
+                      alt="Kenangan 1"
+                    />
+                  </div>
+                  <div class="gallery-item">
+                    <img
+                      class="h-auto max-w-full rounded-lg shadow-lg"
+                      src="images/momen2.jpg"
+                      alt="Kenangan 2"
+                    />
+                  </div>
+                </div>
+                <div class="grid gap-4">
+                  <div class="gallery-item">
+                    <img
+                      class="h-auto max-w-full rounded-lg shadow-lg"
+                      src="images/momen3.jpg"
+                      alt="Kenangan 3"
+                    />
+                  </div>
+                  <div class="gallery-item">
+                    <img
+                      class="h-auto max-w-full rounded-lg shadow-lg"
+                      src="images/momen4.jpg"
+                      alt="Kenangan 4"
+                    />
+                  </div>
+                </div>
+                <div class="grid gap-4">
+                  <div class="gallery-item">
+                    <img
+                      class="h-auto max-w-full rounded-lg shadow-lg"
+                      src="images/momen5.jpg"
+                      alt="Kenangan 5"
+                    />
+                  </div>
+                  <div class="gallery-item">
+                    <img
+                      class="h-auto max-w-full rounded-lg shadow-lg"
+                      src="images/momen6.jpg"
+                      alt="Kenangan 6"
+                    />
+                  </div>
+                </div>
+                <div class="grid gap-4">
+                  <div class="gallery-item">
+                    <img
+                      class="h-auto max-w-full rounded-lg shadow-lg"
+                      src="images/momen7.jpg"
+                      alt="Kenangan 7"
+                    />
+                  </div>
+                  <div class="gallery-item">
+                    <img
+                      class="h-auto max-w-full rounded-lg shadow-lg"
+                      src="images/momen8.jpg"
+                      alt="Kenangan 8"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="map" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+              <h2
+                class="section-title text-4xl font-bold mb-12 text-rose-500 gsap-reveal"
+              >
+                Peta Kenangan Kita
+              </h2>
+              <div
+                class="relative w-full max-w-4xl mx-auto rounded-lg shadow-2xl"
+              >
+                <img
+                  src="images/peta.png"
+                  alt="Peta Kenangan"
+                  class="w-full h-auto rounded-lg"
+                />
+                <div class="pin-container absolute" style="top: 26%; left: 44.2%">
+                    <div class="pin-dot w-6 h-6 bg-rose-500 rounded-full cursor-pointer flex items-center justify-center shadow-lg transform hover:scale-125 transition-transform">
+                        <i class="fas fa-map-marker-alt text-white"></i>
+                    </div>
+                    <div class="pin-info hidden absolute bottom-full mb-2 w-48 bg-white p-3 rounded-lg shadow-lg text-left">
+                        <h4 class="font-bold">SMAK Frateran</h4>
+                        <p class="text-xs text-gray-700 mt-1">
+                            Pertama kali kita ketemu waktu aku jaga stand, tapi kita berdua ga sadar. 
+                            Terus kita kenal waktu di latihan DBL dan pegangan tangan pertama kali disini.
+                            Banyak banget kenangan disini
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pin-container absolute" style="top: 54%; left: 62.5%">
+                    <div class="pin-dot w-6 h-6 bg-rose-500 rounded-full cursor-pointer flex items-center justify-center shadow-lg transform hover:scale-125 transition-transform">
+                        <i class="fas fa-map-marker-alt text-white"></i>
+                    </div>
+                    <div class="pin-info hidden absolute bottom-full mb-2 w-48 bg-white p-3 rounded-lg shadow-lg text-left">
+                        <h4 class="font-bold">Galaxy Mall</h4>
+                        <p class="text-xs text-gray-700 mt-1">
+                            Date pertama kita waktu cari kado nya thal. Terus date pertama kita nonton The Nun 2 disini juga.
+                        </p>
+                  </div>
+                </div>
+
+                <div class="pin-container absolute" style="bottom: 6%; left: 42%">
+                    <div class="pin-dot w-6 h-6 bg-rose-500 rounded-full cursor-pointer flex items-center justify-center shadow-lg transform hover:scale-125 transition-transform">
+                        <i class="fas fa-map-marker-alt text-white"></i>
+                    </div>
+                    <div class="pin-info hidden absolute bottom-full mb-2 w-48 bg-white p-3 rounded-lg shadow-lg text-left">
+                        <h4 class="font-bold">DBL</h4>
+                        <p class="text-xs text-gray-700 mt-1">
+                            Tempat dimana kita satu panggung, aku jadi properti kamu jadi dancer.
+                        </p>
+                  </div>
+                </div>
+
+
+                <div class="pin-container absolute" style="top: 32%; left: 44.2%">
+                    <div class="pin-dot w-6 h-6 bg-rose-500 rounded-full cursor-pointer flex items-center justify-center shadow-lg transform hover:scale-125 transition-transform">
+                        <i class="fas fa-map-marker-alt text-white"></i>
+                    </div>
+                    <div class="pin-info hidden absolute bottom-full mb-2 w-48 bg-white p-3 rounded-lg shadow-lg text-left">
+                        <h4 class="font-bold">Tugu Pahlawan</h4>
+                        <p class="text-xs text-gray-700 mt-1">
+                            Ingettt gaaa, kamu tiba tiba suruh aku dateng ke sini trus kita lanjut 
+                            ke jalan tunjungan sama agnes sama tif.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pin-container absolute" style="bottom: 30%; left: 19%">
+                    <div class="pin-dot w-6 h-6 bg-rose-500 rounded-full cursor-pointer flex items-center justify-center shadow-lg transform hover:scale-125 transition-transform">
+                        <i class="fas fa-map-marker-alt text-white"></i>
+                    </div>
+                    <div class="pin-info hidden absolute bottom-full mb-2 w-48 bg-white p-3 rounded-lg shadow-lg text-left">
+                        <h4 class="font-bold">Pakuwon Mall</h4>
+                        <p class="text-xs text-gray-700 mt-1">
+                            Hadiah dari AKUU MAKANN HAI DI LAOOOO YEAAAYY!!
+                          YUHUUUU MAKAN HAI DI LAOOO!!!
+                        </p>
+                    </div>
+                </div>
+
+
+                 <div class="pin-container absolute" style="top: 50%; right: 22%">
+                    <div class="pin-dot w-6 h-6 bg-rose-500 rounded-full cursor-pointer flex items-center justify-center shadow-lg transform hover:scale-125 transition-transform">
+                        <i class="fas fa-map-marker-alt text-white"></i>
+                    </div>
+                    <div class="pin-info hidden absolute bottom-full mb-2 w-48 bg-white p-3 rounded-lg shadow-lg text-left">
+                        <h4 class="font-bold">Konser Nadine</h4>
+                        <p class="text-xs text-gray-700 mt-1">
+                            Kadoo darii cayangggg!!!
+                            YEAAAAYYY NONTON KONSER NADINEE AMIZAH!!
+                        </p>
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+          </section>
+
+          <section id="reasons" class="py-20 bg-rose-50">
+            <div class="container mx-auto px-6 text-center">
+              <h2
+                class="section-title text-4xl font-bold mb-4 text-rose-500 gsap-reveal"
+              >
+                Untuk Cayangkuu
+              </h2>
+              <p
+                class="reason-subtitle mb-12 max-w-3xl mx-auto text-stone-600 gsap-reveal"
+              >
+                Dua tahun ini, aku happyy bangett ketemu sama cayang, cayangg tahu ga kenapa aku sayang banget sama cayang? 
+                Karena...
+              </p>
+              <div class="grid md:grid-cols-3 gap-8 text-left">
+                <div class="reason-card bg-white p-6 rounded-lg shadow-lg">
+                  <h3 class="font-bold text-xl mb-2">Nerima aku</h3>
+                  <p class="text-stone-600">
+                   Cayang mau nerima aku apa adanya, aku yang jelek, aku yang
+                    kadang ngeselin, aku yang ga bisa kasih semua yang cayang mau. <br>
+                    Tapi cayang masih mau sama aku, bertahan nunggu aku sukses. Thankyouuuuu
+                  </p>
+                </div>
+                <div class="reason-card bg-white p-6 rounded-lg shadow-lg">
+                  <h3 class="font-bold text-xl mb-2">GEMAYYY</h3>
+                  <p class="text-stone-600">
+                    Cayang ituuu gemayyy bangett, mukanya kelakuannyaa gemayyy kek bocill tapiiii LUCUU!<br>
+                    Marah punn cayang gemayy HEHEHHEHEHHE. Lucu pokoknyaaa!
+                  </p>
+                </div>
+                <div class="reason-card bg-white p-6 rounded-lg shadow-lg">
+                  <h3 class="font-bold text-xl mb-2">Cara cayang memberikan rasa sayang</h3>
+                  <p class="text-stone-600">
+                    Cayang selalu baik banget selalu sayang ama aku. <br>
+                    cara cayangg ngasih perhatiannya, cara cayang ngertiin aku, cara cayang terima aku. <br>
+                    AKUU HAPPY BANGETTT HEHEHHEHE!!<br>
+                    I LOVE YOUUU CAYANGGGG
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+
+        <footer class="bg-stone-800 py-6 text-center text-white">
+          <p>Dibuat dengan CINTA untuk CAYANGKU.</p>
+          <p class="text-sm text-stone-400">Happy 2nd Anniversary EYY!</p>
+        </footer>
+      </div>
+    </div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.164.1/build/three.module.js"
+        }
+      }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+    <script type="module">
+      import * as THREE from "three";
+
+      // --- DATE LOCK & COUNTDOWN LOGIC ---
+      // =================================================================
+      // === IMPORTANT: SET YOUR ANNIVERSARY DATE HERE ===
+      // =================================================================
+      // Format: YYYY-MM-DDTHH:MM:SS
+      const unlockDate = new Date("2025-09-18T00:00:00");
+
+      const countdownContainer = document.getElementById("countdown-container");
+      const anniversaryContent = document.getElementById("anniversary-content");
+      const timerDays = document.getElementById("days");
+      const timerHours = document.getElementById("hours");
+      const timerMinutes = document.getElementById("minutes");
+      const timerSeconds = document.getElementById("seconds");
+
+      function checkDate() {
+        const now = new Date();
+
+        if (now >= unlockDate) {
+          // Time to reveal the site!
+          countdownContainer.style.display = "none";
+          anniversaryContent.style.display = "block";
+        } else {
+          // Still counting down
+          anniversaryContent.style.display = "none";
+          countdownContainer.style.display = "flex";
+          startCountdown();
+        }
+      }
+
+      let countdownInterval;
+      function startCountdown() {
+        if (countdownInterval) clearInterval(countdownInterval);
+
+        countdownInterval = setInterval(() => {
+          const now = new Date().getTime();
+          const distance = unlockDate - now;
+
+          if (distance < 0) {
+            clearInterval(countdownInterval);
+            checkDate(); // Re-check to show the content
+            return;
+          }
+
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const minutes = Math.floor(
+            (distance % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          timerDays.textContent = String(days).padStart(2, "0");
+          timerHours.textContent = String(hours).padStart(2, "0");
+          timerMinutes.textContent = String(minutes).padStart(2, "0");
+          timerSeconds.textContent = String(seconds).padStart(2, "0");
+        }, 1000);
+      }
+
+      // --- ANNIVERSARY SITE LOGIC (runs after unlock) ---
+
+      // Global Elements
+      const giftLoader = document.getElementById("gift-loader");
+      const mainPageContent = document.getElementById("main-page-content");
+      const clickPrompt = document.getElementById("click-prompt");
+      let isGiftClicked = false;
+
+      // THREE.js Gift Box Animation
+      let lid, giftBox, scene, camera, renderer;
+
+      function initGift3D() {
+        const canvas = document.getElementById("threejs-canvas");
+        const container = canvas.parentElement;
+        if (!canvas) return;
+
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(
+          60,
+          container.clientWidth / container.clientHeight,
+          0.1,
+          1000
+        );
+        camera.position.z = 15;
+        renderer = new THREE.WebGLRenderer({
+          canvas: canvas,
+          alpha: true,
+          antialias: true,
+        });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        directionalLight.position.set(5, 10, 7.5);
+        scene.add(directionalLight);
+
+        const boxMaterial = new THREE.MeshStandardMaterial({
+          color: 0xffafc8,
+          roughness: 0.5,
+        });
+        const ribbonMaterial = new THREE.MeshStandardMaterial({
+          color: 0xffffff,
+          roughness: 0.4,
+        });
+
+        giftBox = new THREE.Group();
+        const base = new THREE.Mesh(
+          new THREE.BoxGeometry(6, 6, 6),
+          boxMaterial
+        );
+        giftBox.add(base);
+
+        lid = new THREE.Group();
+        const lidTop = new THREE.Mesh(
+          new THREE.BoxGeometry(6.2, 1.2, 6.2),
+          boxMaterial
+        );
+        lidTop.position.y = 3;
+        lid.add(lidTop);
+
+        const ribbonV = new THREE.Mesh(
+          new THREE.BoxGeometry(6.3, 1.3, 1.2),
+          ribbonMaterial
+        );
+        const ribbonH = new THREE.Mesh(
+          new THREE.BoxGeometry(1.2, 1.3, 6.3),
+          ribbonMaterial
+        );
+        ribbonV.position.y = 3;
+        ribbonH.position.y = 3;
+        lid.add(ribbonV, ribbonH);
+
+        giftBox.add(lid);
+        scene.add(giftBox);
+
+        const clock = new THREE.Clock();
+        function animate() {
+          const elapsedTime = clock.getElapsedTime();
+          giftBox.rotation.y = elapsedTime * 0.3;
+          renderer.render(scene, camera);
+          requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener("resize", () => {
+          camera.aspect = container.clientWidth / container.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.clientWidth, container.clientHeight);
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        });
+      }
+
+      function openGiftAndRevealSite() {
+        if (isGiftClicked) return;
+        isGiftClicked = true;
+
+        const tl = gsap.timeline();
+        tl.to(clickPrompt, { opacity: 0, duration: 0.5, ease: "power2.out" })
+          .to(
+            giftBox.rotation,
+            {
+              y: giftBox.rotation.y + Math.PI / 2,
+              duration: 1,
+              ease: "power2.inOut",
+            },
+            0
+          )
+          .to(lid.position, { y: 6, duration: 1.2, ease: "power2.inOut" }, 0.2)
+          .to(
+            lid.rotation,
+            { x: -Math.PI / 2, duration: 1.2, ease: "power2.inOut" },
+            0.2
+          )
+          .to(
+            giftLoader,
+            {
+              opacity: 0,
+              duration: 1,
+              ease: "power2.in",
+              onComplete: () => {
+                giftLoader.style.display = "none";
+                // Tampilkan konten utama dan jalankan animasi masuk
+                gsap.to(mainPageContent, {
+                  opacity: 1,
+                  visibility: "visible",
+                  duration: 1.5,
+                  ease: "power3.out",
+                  onComplete: initializeScrollAnimations, // Jalankan animasi scroll setelah page muncul
+                });
+              },
+            },
+            "-=0.5"
+          );
+      }
+
+
+      // GSAP Scroll Animations
+      function initializeScrollAnimations() {
+        // ... (Your existing initializeScrollAnimations function is unchanged)
+         gsap.registerPlugin(ScrollTrigger);
+
+        // Animate section titles
+        gsap.utils.toArray(".section-title").forEach((title) => {
+          gsap.from(title, {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            scrollTrigger: { trigger: title, start: "top 85%" },
+          });
+        });
+
+        // Timeline animation
+        gsap.utils.toArray(".timeline-item").forEach((item) => {
+          const direction = item.classList.contains("left-timeline")
+            ? -100
+            : 100;
+          gsap.from(item, {
+            x: direction,
+            opacity: 0,
+            duration: 1,
+            scrollTrigger: { trigger: item, start: "top 80%" },
+          });
+        });
+      }
+
+      // Main Execution
+      document.addEventListener("DOMContentLoaded", () => {
+        // First, check if the site should be unlocked
+        checkDate();
+
+        // The rest of the initializations will run, but the content is hidden
+        // until the date is right.
+        initGift3D();
+        giftLoader.addEventListener("click", openGiftAndRevealSite);
+        setupSmoothScroll();
+        setupMobileMenu();
+        initializeSlideshow();
+        initializeMapPins();
+      });
+
+      // --- Utility Functions (Menu, Scroll) ---
+      function setupMobileMenu() {
+        const mobileMenu = document.getElementById("mobile-menu");
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const menuIcon = mobileMenuButton.querySelector("i");
+        gsap.set(mobileMenu, { height: 0 });
+        const menuTimeline = gsap.timeline({ paused: true, reversed: true });
+        menuTimeline.to(mobileMenu, {
+          height: "auto",
+          duration: 0.4,
+          ease: "power2.inOut",
+        });
+        const toggleMenu = () => {
+          menuIcon.classList.toggle("fa-bars");
+          menuIcon.classList.toggle("fa-times");
+          menuTimeline.reversed()
+            ? menuTimeline.play()
+            : menuTimeline.reverse();
+        };
+        mobileMenuButton.addEventListener("click", toggleMenu);
+        document.querySelectorAll("#mobile-menu a").forEach((link) => {
+          link.addEventListener("click", () => {
+            if (!menuTimeline.reversed()) toggleMenu();
+          });
+        });
+      }
+
+      function setupSmoothScroll() {
+        gsap.registerPlugin(ScrollToPlugin);
+        document
+          .querySelectorAll('nav a[href^="#"], #mobile-menu a[href^="#"]')
+          .forEach((link) => {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              gsap.to(window, {
+                duration: 1.2,
+                scrollTo: link.getAttribute("href"),
+                ease: "power2.inOut",
+              });
+            });
+          });
+      }
+
+
+      function initializeSlideshow() {
+         const slides = document.querySelectorAll('.bg-slide');
+         if(slides.length === 0) return;
+
+         let currentSlide = 0;
+         const slideInterval = 3000;
+
+         function nextSlide() {
+             slides[currentSlide].classList.remove('opacity-100');
+             slides[currentSlide].classList.add('opacity-0');
+             currentSlide = (currentSlide + 1) % slides.length;
+             slides[currentSlide].classList.remove('opacity-0');
+             slides[currentSlide].classList.add('opacity-100');
+         }
+
+         setInterval(nextSlide, slideInterval);
+      }
+
+      function initializeMapPins() {
+         const pinContainers = document.querySelectorAll('.pin-container');
+         pinContainers.forEach(container => {
+             const pinInfo = container.querySelector('.pin-info');
+             container.addEventListener('mouseenter', () => {
+                 pinInfo.classList.remove('hidden');
+             });
+             container.addEventListener('mouseleave', () => {
+                 pinInfo.classList.add('hidden');
+             });
+         });
+      }
+
+       document.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.bg-slide');
+        let currentSlide = 0;
+        const slideInterval = 6000; // Ganti gambar setiap 6 detik (6000ms)
+
+        function nextSlide() {
+            // Sembunyikan slide saat ini
+            slides[currentSlide].classList.remove('opacity-100');
+            slides[currentSlide].classList.add('opacity-0');
+
+            // Pindah ke slide berikutnya (atau kembali ke awal jika sudah di akhir)
+            currentSlide = (currentSlide + 1) % slides.length;
+
+            // Tampilkan slide berikutnya
+            slides[currentSlide].classList.remove('opacity-0');
+            slides[currentSlide].classList.add('opacity-100');
+        }
+
+        // Mulai slideshow
+        setInterval(nextSlide, slideInterval);
+    });
+
+
+    // Menunggu seluruh konten halaman dimuat terlebih dahulu
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ambil semua elemen dengan class 'pin-container'
+            const pinContainers = document.querySelectorAll('.pin-container');
+
+            // Lakukan perulangan untuk setiap pin
+            pinContainers.forEach(container => {
+                const pinInfo = container.querySelector('.pin-info');
+
+                // Tampilkan info saat mouse masuk ke area pin
+                container.addEventListener('mouseenter', () => {
+                    pinInfo.classList.remove('hidden');
+                });
+
+                // Sembunyikan lagi saat mouse keluar dari area pin
+                container.addEventListener('mouseleave', () => {
+                    pinInfo.classList.add('hidden');
+                });
+            });
+        });
+    </script>
+  </body>
+</html>
